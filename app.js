@@ -25,6 +25,12 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    rolling: true,
+    cookie: {
+      maxAge: 1000 * 60 * 60,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+    },
   })
 );
 
@@ -43,7 +49,8 @@ const adminRouter = require("./routes/adminRouter");
 app.use("/", indexRouter);
 app.use("/admin", adminRouter);
 
-app.listen(3000, (error) => {
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, (error) => {
   if (error) throw error;
 
   console.log("App listening on port 3000");
