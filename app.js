@@ -16,6 +16,7 @@ app.use(express.static(assestsPath));
 app.use(express.urlencoded({ extended: true }));
 
 // Session middleware
+app.set("trust proxy", 1);
 app.use(
   session({
     store: new pgSession({
@@ -28,6 +29,7 @@ app.use(
     rolling: true,
     cookie: {
       maxAge: 1000 * 60 * 60,
+      httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
     },
