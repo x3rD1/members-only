@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login to Clu8080 • Clu8080</title>
+    <link rel="stylesheet" href="styles/login.css" />
+  </head>
+  <body>
+    <h1>Sign in to Clu8080</h1>
+    <% if (message && message.length > 0) { %>
+    <p class="error"><%= message %></p>
+    <% } %>
+    <form action="/login" method="POST">
+      <label for="username">Username or email address</label>
+      <input
+        type="text"
+        name="username"
+        id="username"
+        value="<%= oldInput ? oldInput.username : '' %>"
+        required
+      />
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password" required />
+      <button type="submit">Sign in</button>
+    </form>
+    <p>New to Clu8080? <a href="/signup">Create an account</a></p>
+  </body>
+</html>

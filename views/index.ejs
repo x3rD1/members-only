@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clu8080</title>
+    <link rel="stylesheet" href="styles/index.css" />
+    <script src="modals/createMessage.js" defer></script>
+  </head>
+  <body>
+    <nav>
+      <a href="/"><h1>Clu8080</h1></a>
+      <% if (user){ %>
+      <div class="nav-links">
+        <% if (!user.membership) { %>
+        <a href="/membership">Get a membership</a>
+        <%}%>
+        <a href="/logout">Sign out</a>
+      </div>
+      <%} else {%>
+      <div class="nav-links">
+        <a href="/login">Sign in</a>
+        <a href="/signup">Sign up</a>
+      </div>
+      <%}%>
+    </nav>
+    <main>
+      <div class="head">
+        <h2>Posts</h2>
+        <% if (user) { %>
+        <button id="openModalBtn">New Post</button>
+        <% } %>
+      </div>
+      <div id="postsContainer">
+        <% messages.forEach(message => { %>
+        <div>
+          <% if (user && user.membership || user?.username === message.username)
+          { %>
+          <div class="user">
+            <h3>@<%= message.username %></h3>
+            <% if (user && user.isadmin) { %>
+            <form action="/admin/delete/<%= message.id %>" method="POST">
+              <button type="submit">Delete</button>
+            </form>
+            <% } %>
+          </div>
+          <%} else {%>
+          <h3 class="anon">Anonymous</h3>
+          <%}%>
+          <h3><%= message.title %></h3>
+          <p><%= message.body %></p>
+          <% if (user) { %>
+          <p class="post-date">
+            <%= new Date(message.created_at).toLocaleString('en-US', { year:
+            'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute:
+            '2-digit' }) %>
+          </p>
+          <%}%>
+        </div>
+        <%})%>
+      </div>
+    </main>
+
+    <div id="modalOverlay" class="hidden">
+      <div class="modal">
+        <div class="modal-header">
+          <h3>Create a new post</h3>
+          <button id="closeModalBtn" class="close-btn">&times;</button>
+        </div>
+
+        <form action="/new" method="POST" class="modal-form">
+          <label for="title">Title</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            placeholder="Enter post title"
+            required
+          />
+
+          <label for="message">Message</label>
+          <textarea
+            id="message"
+            name="message"
+            placeholder="Write your message..."
+            required
+          ></textarea>
+
+          <button type="submit">Post</button>
+        </form>
+      </div>
+    </div>
+    <%- include('partials/footer') %>
+  </body>
+</html>

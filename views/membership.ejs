@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Membership • Clu8080</title>
+    <link rel="stylesheet" href="/styles/membership.css" />
+  </head>
+  <body>
+    <main class="membership-container">
+      <h1>Get a membership using the exclusive password</h1>
+      <form action="/membership" method="POST">
+        <div class="form-group">
+          <label for="code">Membership Code</label>
+          <input
+            type="password"
+            id="code"
+            name="code"
+            placeholder="Enter membership code"
+            required
+          />
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+    </main>
+  </body>
+</html>
