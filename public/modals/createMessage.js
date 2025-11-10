@@ -29,3 +29,16 @@ document.addEventListener("click", (e) => {
     overlay.style.display = "none";
   }
 });
+
+// Timestamp
+
+document.querySelectorAll(".post-date").forEach((el) => {
+  const local = new Date(el.dataset.timestamp).toLocaleString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  el.textContent = local;
+});
