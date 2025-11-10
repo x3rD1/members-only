@@ -50,10 +50,7 @@
           <h3><%= message.title %></h3>
           <p><%= message.body %></p>
           <% if (user) { %>
-          <p class="post-date">
-            <%= new Date(message.created_at + 'Z').toLocaleString('en-US', {
-            year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit',
-            minute: '2-digit' }) %>
+          <p class="post-date" data-timestamp="<%= message.created_at %>">
           </p>
           <%}%>
         </div>
