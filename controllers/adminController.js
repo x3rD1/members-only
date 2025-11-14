@@ -1,6 +1,6 @@
-const db = require("../db/queries");
+const db = require("../db/index");
 
 exports.deleteMessage = async (req, res) => {
-  await db.deleteMessage(req.params.id);
+  await db.messages.deleteMessage(req.params.id);
   res.redirect("/");
 };

@@ -1,9 +1,9 @@
+const { db } = require("../db/index");
 const { validationResult } = require("express-validator");
 require("dotenv").config();
-const db = require("../db/queries");
 
 exports.getIndexPage = async (req, res) => {
-  const messages = await db.getMessages();
+  const messages = await db.messages.getMessages();
 
   res.locals.messages = messages;
   res.render("index");
@@ -39,7 +39,7 @@ exports.postSignUpPage = async (req, res) => {
 
   // Insert data into the Database
   const { name, lastname, username, password } = req.body;
-  await db.signup(name, lastname, username, password);
+  await db.users.signup(name, lastname, username, password);
 
   res.redirect("/login");
 };
@@ -63,9 +63,9 @@ exports.postMembership = async (req, res) => {
     return res.redirect("/membership");
   }
   // Change user membership status to true
-  await db.getMembership(req.user.id);
+  await db.users.getMembership(req.user.id);
   // Get user by id
-  const user = await db.getUser(req.user.id);
+  const user = await db.users.getUser(req.user.id);
 
   // Refresh user session
   req.login(user, (err) => {
@@ -77,7 +77,7 @@ exports.postMembership = async (req, res) => {
 exports.createMessage = async (req, res) => {
   const { title, message } = req.body;
 
-  await db.createMessage(req.user.id, title, message);
+  await db.messages.createMessage(req.user.id, title, message);
 
   res.redirect("/");
 };
